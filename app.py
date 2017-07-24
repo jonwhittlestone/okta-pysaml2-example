@@ -51,7 +51,7 @@ import requests
 #   for your concept of "customer company", "group", "organization", or "team"
 metadata_url_for = {
     # For testing with http://saml.oktadev.com use the following:
-    'test': 'http://idp.oktadev.com/metadata',
+    # 'test': 'http://idp.oktadev.com/metadata',
     # WARNING WARNING WARNING
     #   You MUST remove the testing IdP from a production system,
     #   as the testing IdP will allow ANYBODY to log in as ANY USER!
