@@ -51,7 +51,7 @@ import requests
 #   for your concept of "customer company", "group", "organization", or "team"
 metadata_url_for = {
     # For testing with http://saml.oktadev.com use the following:
-    # 'test': 'http://idp.oktadev.com/metadata',
+    'test': 'http://idp.oktadev.com/metadata',
     # WARNING WARNING WARNING
     #   You MUST remove the testing IdP from a production system,
     #   as the testing IdP will allow ANYBODY to log in as ANY USER!
@@ -62,7 +62,7 @@ app = Flask(__name__)
 Bootstrap(app)
 app.secret_key = str(uuid.uuid4())  # Replace with your secret key
 login_manager = LoginManager()
-login_manager.setup_app(app)
+login_manager.init_app(app)
 logging.basicConfig(level=logging.DEBUG)
 # NOTE:
 #   This is implemented as a dictionary for DEMONSTRATION PURPOSES ONLY.
@@ -134,7 +134,7 @@ class User(UserMixin):
         self.last_name = None
         try:
             user = user_store[user_id]
-            self.id = unicode(user_id)
+            self.id = str(user_id)
             self.first_name = user['first_name']
             self.last_name = user['last_name']
         except:
