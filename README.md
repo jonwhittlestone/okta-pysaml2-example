@@ -85,9 +85,9 @@ Here is how:
         
         **Issuer:** "urn:example:idp"
         
-        **SAML ACS URL:** "<http://REPLACE_ME.ngrok.com/saml/sso/test>"
+        **SAML ACS URL:** "<http://REPLACE_ME.ngrok.io/saml/sso/test>"
         
-        **SAML Audience URI:** "<http://REPLACE_ME.ngrok.com/saml/sso/test>"
+        **SAML Audience URI:** "<http://REPLACE_ME.ngrok.io/saml/sso/test>"
         
         Be sure to replace the string "REPLACE\_ME" with the sub-domain that ngrok selected for you!
     -   Click the "Submit" button.
