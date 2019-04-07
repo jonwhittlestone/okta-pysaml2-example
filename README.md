@@ -1,111 +1,70 @@
-# Introduction
+# flask-pysaml2-okta
 
-This is an example SAML SP service written using [Flask](http://flask.pocoo.org/) and [pysaml2](https://github.com/rohe/pysaml2).
+This guide is a step by step process for creating a Flask SAML integration and is an amalgamation of two articles and the python3 sample flask app
 
-# Requirements
+Okta Guide for Configuring PySAML2:
 
--   [Python](https://www.python.org/) 2.7+
--   [Virtualenv](https://virtualenv.pypa.io/en/latest/)
--   [pip](https://pip.pypa.io/en/stable/)
+    https://developer.okta.com/code/python/pysaml2/
 
-You will also need a development environment capable of compiling
-Python packages and the "libffi" and "libxmlsec1" development
-libraries, which are needed by PySAML2.
+Okta guide for creating a SAML Application:
 
-Instructions for installing these development libraries will differ
-depending on your host operating system.
+    https://developer.okta.com/standards/SAML/setting_up_a_saml_application_in_okta/
 
-## Mac OS X
+## Prerequisite
 
-```shell
-$ brew install libffi libxmlsec1
-```
+- Git
+- Sign up for an Okta developer account
+- Okta Classic UI
+  When logged in, choose 'Classic UI' from view dropdown at top-left of the page (screenshot below)
+- Follow [Okta's guite](https://developer.okta.com/standards/SAML/setting_up_a_saml_application_in_okta/) for setting up a SAML App.
 
-## RHEL
+  > _Configure the SAML Identity Provider with the details of your application (the new SAML service provider)_
 
-```shell
-$ sudo yum install libffi-devel xmlsec1 xmlsec1-openssl
-```
+## Steps
 
-# Installation
+1. Choose 'Classic UI' for viewing Okta's developer portal
 
-```shell
-$ virtualenv venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt 
-```
+   ![Classic UI](docs/okta_classicui.png)
 
-# Running
+2. Create App to get the modal 'Create a New Application Integration'
 
- ```shell
-$ python app.py 
- ```
+   - Platform: _Web_
+   - Sign on method: _SAML 2.0_
+   - click button CREATE
 
-# Testing
+   Create SAML Integration Page
 
-The fastest way to test this example SAML SP is to use the [saml.oktadev.com](http://saml.oktadev.com/) service.
+   - Step 2: Configure SAML
 
-Here is how:
+     - Single sign on URL: _http://localhost:5000/saml/sso/example-okta-com_
+     - As per the guide, create attribute statements
+       1. "FirstName" set to "user.firstName"
+       2. "LastName" set to "user.lastName"
+       3. "Email" set to "user.email"
 
-1.  Edit the "app.py" file and uncomment the line in the "test" line in "metadata\_url\_for" dictionary.
-    
-    ```shell
-    $ $EDITOR app.py
-    ```
-    
-    Change this line:
-    
-    ```shell
-    # 'test': 'http://idp.oktadev.com/metadata',                                                                                                
-    ```
-    
-    To this:
-    
-    ```shell
-    'test': 'http://idp.oktadev.com/metadata',
-    ```
-2.  Start the example SAML SP
-    
-    ```shell
-    $ python app.py
-    ```
-3.  Start ngrok on the port that the example SAML SP is running on. By default, the example SAML SP runs on TCP 5000.
-    
-    ```shell
-    $ ngrok http 5000
-    ```
-    
-    You will need to [install ngrok](https://ngrok.com/download) if you haven't already.
-    
-    Here is what it should look like:
-    
-    ![img](./docs/_static/ngrok.png "A screenshot of ngrok 2.0 running")
-4.  Run [saml.oktadev.com](http://saml.oktadev.com) to test this example SAML SP
-    -   Load [saml.oktadev.com](http://saml.oktadev.com) in your browser and fill out as follows:
-        
-        **Issuer:** "urn:example:idp"
-        
-        **SAML ACS URL:** "<http://REPLACE_ME.ngrok.io/saml/sso/test>"
-        
-        **SAML Audience URI:** "<http://REPLACE_ME.ngrok.io/saml/sso/test>"
-        
-        Be sure to replace the string "REPLACE\_ME" with the sub-domain that ngrok selected for you!
-    -   Click the "Submit" button.
-    -   Your output should look like the image below:
-        ![img](./docs/_static/validation-success.png)
+   - Add feedback
+   - click FINISH. The app is now created
+   - Under settings, view the Identity Provider metadata and keep open for later
+   - Click 'People' and assign to the dev user
 
-# Testing the security of your SAML SP
+3. In the flask app, modify the line with the URL of your Identity Provider Metadata (see screenshot below)
 
-After successfully completing the steps in the "Testing" section
-above, select the "Run security validation" option to have
-saml.oktadev.com run an extended series of security tests against
-your SAML SP.
+   ![Identity Provider Metadata](docs/okta_metadata_link.png)
 
-# Contact
+   ```
+       metadata_url_for = {
+           'example-okta-com': '${metadata_url}'
+       }
+   ```
 
-Updates or corrections to this document are very welcome. Feel free
-to send [pull requests](https://help.github.com/articles/using-pull-requests/) with suggestions.
+4. Build the docker container and tag, and run
 
+   ```
+   $ docker build . -t python3-okta-example`
 
-Additionally, comments or questions can be sent to:
-&#x64;&#x65;&#x76;&#x65;&#x6C;&#x6F;&#x70;&#x65;&#x72;&#x73;&#x40;&#x6F;&#x6B;&#x74;&#x61;&#x2E;&#x63;&#x6F;&#x6D;
+   $ docker run -p 5000:5000 python3-okta-example
+   ```
+
+5. In a browser, visit [localhost:5000](http://localhost:5000), and select relevant Okta application
+
+6. Succesful log in via SAML to the Service Provider can be verified on the Okta dashboard (non-Classic UI)
