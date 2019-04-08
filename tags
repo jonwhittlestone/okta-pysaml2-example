@@ -1,0 +1,20 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+User	app.py	/^class User(UserMixin):$/;"	c
+__init__	app.py	/^    def __init__(self, user_id):$/;"	m	class:User
+app	app.py	/^app = Flask(__name__)$/;"	v
+error_unauthorized	app.py	/^def error_unauthorized(error):$/;"	f
+idp_initiated	app.py	/^def idp_initiated(idp_name):$/;"	f
+load_user	app.py	/^def load_user(user_id):$/;"	f
+login_manager	app.py	/^login_manager = LoginManager()$/;"	v
+logout	app.py	/^def logout():$/;"	f
+main_page	app.py	/^def main_page():$/;"	f
+metadata_url_for	app.py	/^metadata_url_for = {$/;"	v
+saml_client_for	app.py	/^def saml_client_for(idp_name=None):$/;"	f
+sp_initiated	app.py	/^def sp_initiated(idp_name):$/;"	f
+user	app.py	/^def user():$/;"	f
+user_store	app.py	/^user_store = {}$/;"	v

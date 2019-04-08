@@ -2,6 +2,9 @@
 
 This guide is a step by step process for creating a Flask SAML integration and is an amalgamation of two articles and the python3 sample flask app
 
+
+> Looking for a Django Implementation? [Look Here](https://github.com/jonwhittlestone/okta-django-saml2)
+
 Okta Guide for Configuring PySAML2:
 
     https://developer.okta.com/code/python/pysaml2/
